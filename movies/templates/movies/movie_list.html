@@ -1,0 +1,8 @@
+
+ <h1>Here's a list of those that you have seen (best to worst)</h1>
+ {% for movie in movies %}
+ <ul>
+ <li>{{ movie.title }}: {{ movie.rating }}</li>
+ </ul>
+ {% endfor %}
+ 

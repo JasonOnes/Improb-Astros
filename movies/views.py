@@ -4,6 +4,9 @@ from django.shortcuts import render
 from .models import Movie 
 
 # Create your views here.
+
+#below placed in improbable views
+'''
 def movies_seen(request):
     movies = Movie.objects.all()
     output = ','.join([str(movie) for movie in movies])
@@ -15,5 +18,12 @@ def movies_seen(request):
         
         """
 
+    return HttpResponse(html_response)
+    #return HttpResponse(output)
+'''
+
+def movies_seen(request):
+    movies = Movie.objects.all().order_by('-rating') # - before rating reverses order!
     #return HttpResponse(html_response)
-    return HttpResponse(output)
+    return render(request, 'movies/movie_list.html', {'movies': movies})
+   

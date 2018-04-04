@@ -14,19 +14,23 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns #won't be needed when deployed via PaaS
 from django.urls import include, path
 from django.conf.urls import url 
 from . import views 
+import movies
+
 
 
 urlpatterns = [
     path('movies/', include('movies.urls')),
     path('admin/', admin.site.urls),
     path('', views.hello_world),
-    # path('/movies_seen', views.movies_seen),
+    path('movies_seen', movies.views.movies_seen),
 ]
 """ below for treehouse demo version 1.8 """
     #url(r'^$', views.hello_world),
-    
+
+urlpatterns += staticfiles_urlpatterns() # only used for local development to locate static
 
 
