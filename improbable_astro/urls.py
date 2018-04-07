@@ -27,6 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.hello_world),
     path('movies_seen', movies.views.movies_seen),
+    url(r'(?P<pk>\d+)/$', movies.views.movie_detail),
 ]
 """ below for treehouse demo version 1.8 """
     #url(r'^$', views.hello_world),

@@ -1,7 +1,20 @@
 from django.db import models
 from datetime import date 
 
-MOVIE_CATEGORIES = (
+
+class User(models.Model):
+    name =  models.CharField(max_length=200)
+    email = models.EmailField()
+
+
+    def __str__(self):
+        return self.name
+
+
+
+
+class Movie(models.Model):
+    MOVIE_CATEGORIES = (
     ('C', 'Comedy'),
     ('D', 'Documentary'),
     ('H', 'Horror'),
@@ -10,16 +23,16 @@ MOVIE_CATEGORIES = (
     ('D', 'Drama'),
     ('Cl', 'Classic'),
     ('CC', 'Cult Classic'),
+    )
 
-)
-class Movie(models.Model):
     added = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=200)
     seen_on = models.DateField(default=date.today)
-    rating = models.PositiveSmallIntegerField()
+    rating = models.PositiveSmallIntegerField(default=0)
     category = models.CharField(choices=MOVIE_CATEGORIES, max_length=2, default='D')
-    comments = models.CharField(max_length=1000, default='')
+    comments = models.TextField()
+    reviewer = models.ForeignKey(User, on_delete=models.CASCADE) #many to one, if user is deleted all movies attributed will also be removed
 
     def __str__(self):
         return self.title
-        
+    

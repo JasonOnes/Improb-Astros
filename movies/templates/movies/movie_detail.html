@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{ movie.title }}</h1>
+<p>is a {{ movie.category }} and was given a {{ movie.rating }}</p>
+<p>Here is what {{ user.name }} had to say about it: </p>
+<p>{{ movie.comments }}</p>
+
+{% endblock %}
