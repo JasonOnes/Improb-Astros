@@ -26,8 +26,13 @@ urlpatterns = [
     path('movies/', include('movies.urls')),
     path('admin/', admin.site.urls),
     path('', views.hello_world),
-    path('movies_seen', movies.views.movies_seen),
+    #path('movies_seen_by_user', movies.views.movies_seen_by_user),
+    path('all_movies', movies.views.all_movies),
+    url(r'movies_seen_by_user/(?P<user_pk>\d+)/$', movies.views.movies_seen_by_user),
     url(r'(?P<pk>\d+)/$', movies.views.movie_detail),
+   
+    
+    #url(r'(?P<user_pk>\d+)/$', movies.views.movies_seen_by_user),
 ]
 """ below for treehouse demo version 1.8 """
     #url(r'^$', views.hello_world),

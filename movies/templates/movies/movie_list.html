@@ -2,7 +2,11 @@
 
 {% block content %}
 
- <h1>Here's a list of those that you have seen (best to worst)</h1>
+{% if reviewer %}
+ <h1>Here's a list of those that you have seen, {{ reviewer }} (best to worst)</h1>
+ {% else %}
+ <h1>Here's the list of all the movies reviewed thus far!</h1>
+ {% endif %}
  {% for movie in movies %}
  <ul>
  <li><a href="movie_detail/{{ movie.pk }}">{{ movie.title }}: {{ movie.rating }}</li>

@@ -1,6 +1,6 @@
 from django.db import models
 from datetime import date 
-
+from django.contrib.auth.models import UserManager # django default manager, since no custom user fields
 
 class User(models.Model):
     name =  models.CharField(max_length=200)
