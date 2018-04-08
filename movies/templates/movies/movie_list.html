@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block title %}
+Movies reviewed
+{% endblock %}
+
+
 {% block content %}
 
 {% if reviewer %}
@@ -7,10 +12,21 @@
  {% else %}
  <h1>Here's the list of all the movies reviewed thus far!</h1>
  {% endif %}
- {% for movie in movies %}
+ 
+ <!-- {% for movie in movies %}
  <ul>
  <li><a href="movie_detail/{{ movie.pk }}">{{ movie.title }}: {{ movie.rating }}</li>
  </ul>
  {% endfor %}
- 
+  -->
+
+{% for movie in movies %}
+<div class="card">
+    
+    <header><a href="movie_detail/{{ movie.pk }}">{{ movie.title }}</a></header>
+    <div class="card-copy">
+        Average Score: {{ movie.rating }}
+    </div>
+</div>
+{% endfor %}
  {% endblock %}

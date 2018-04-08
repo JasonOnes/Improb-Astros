@@ -28,6 +28,7 @@ class Movie(models.Model):
     added = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=200)
     seen_on = models.DateField(default=date.today)
+    #change below so that rating = "R, PG, G, XXX, etc."
     rating = models.PositiveSmallIntegerField(default=0)
     category = models.CharField(choices=MOVIE_CATEGORIES, max_length=2, default='D')
     comments = models.TextField(blank=True, default='')

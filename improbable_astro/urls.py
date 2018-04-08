@@ -23,23 +23,21 @@ import movies
 
 
 urlpatterns = [
-    path('movies/', include('movies.urls')),
+    #TODO look up namespaces in Django v2
+    path('movies/', include('movies.urls')),# namespace='movies')),# in treehous not working in v2?
     path('admin/', admin.site.urls),
-    path('home/', views.hello_world),
-    path('all_movies', movies.views.all_movies),
-    re_path(r'\S*/all_movies', movies.views.all_movies),
-    re_path(r'\S*/home', views.hello_world),
+    path('home/', views.hello_world, name='home'),
+    #path('all_movies/', movies.views.all_movies, name='all_movies'),
+    #re_path(r'\S*/all_movies', movies.views.all_movies, name='all_movies'),
+    #re_path(r'\S*/home', views.hello_world, name='home'),
     path('', views.hello_world),
     re_path(r'^$', views.hello_world),
     #url(r'', views.hello_world).
     #path('movies_seen_by_user', movies.views.movies_seen_by_user),
     
-    re_path(r'movies_seen_by_user/(?P<user_pk>\d+)/$', movies.views.movies_seen_by_user),
-    re_path(r'(?P<pk>\d+)/$', movies.views.movie_detail),
-   
     
     #url(r'(?P<user_pk>\d+)/$', movies.views.movies_seen_by_user),
-]
+    ]
 """ below for treehouse demo version 1.8 """
     #url(r'^$', views.hello_world),
 

@@ -23,7 +23,8 @@ def movies_seen(request):
 '''
 def all_movies(request):
     ''' renders a page with ALL the movies by all users '''
-    movies = Movie.objects.all()
+    movies = Movie.objects.all().order_by('title')
+    # return the average ranking as additional paramater 
     return render(request, 'movies/movie_list.html', {'movies':movies})
 
 
