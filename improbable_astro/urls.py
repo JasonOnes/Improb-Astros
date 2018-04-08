@@ -15,8 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns #won't be needed when deployed via PaaS
-from django.urls import include, path
-from django.conf.urls import url 
+from django.urls import include, path, re_path
+# from django.conf.urls import url => url soon to be deprecated
 from . import views 
 import movies
 
@@ -25,11 +25,17 @@ import movies
 urlpatterns = [
     path('movies/', include('movies.urls')),
     path('admin/', admin.site.urls),
-    path('', views.hello_world),
-    #path('movies_seen_by_user', movies.views.movies_seen_by_user),
+    path('home/', views.hello_world),
     path('all_movies', movies.views.all_movies),
-    url(r'movies_seen_by_user/(?P<user_pk>\d+)/$', movies.views.movies_seen_by_user),
-    url(r'(?P<pk>\d+)/$', movies.views.movie_detail),
+    re_path(r'\S*/all_movies', movies.views.all_movies),
+    re_path(r'\S*/home', views.hello_world),
+    path('', views.hello_world),
+    re_path(r'^$', views.hello_world),
+    #url(r'', views.hello_world).
+    #path('movies_seen_by_user', movies.views.movies_seen_by_user),
+    
+    re_path(r'movies_seen_by_user/(?P<user_pk>\d+)/$', movies.views.movies_seen_by_user),
+    re_path(r'(?P<pk>\d+)/$', movies.views.movie_detail),
    
     
     #url(r'(?P<user_pk>\d+)/$', movies.views.movies_seen_by_user),
