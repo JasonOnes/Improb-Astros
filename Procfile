@@ -1,1 +1,1 @@
-web: gunicorn improbable_astr.wsgi
+web: gunicorn improbable_astro.wsgi
