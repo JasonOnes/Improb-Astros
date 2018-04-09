@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import dj_database_url
+import django_heroku
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -75,12 +78,13 @@ WSGI_APPLICATION = 'improbable_astro.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-    'heroku': dj_database_url.config()
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
+    #
+    'default': dj_database_url.config()
+    
 }
 
 
@@ -129,6 +133,6 @@ STATICFILES_DIRS = (
 
 
 # Configure Django App for Heroku.
-import django_heroku
+#
 django_heroku.settings(locals())
 
