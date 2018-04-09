@@ -25,8 +25,8 @@ SECRET_KEY = 'qq-h9!h3a4%2y3ny$bs)^39eg$@lyu%$3jh!r3ie-yl8c8blzh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0']
-
+#ALLOWED_HOSTS = ['0.0.0.0']
+ALLOWED_HOSTS = ['improb-astro.herokuapp.com']
 
 # Application definition
 
@@ -79,6 +79,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+    'heroku': dj_database_url.config()
+    }
 }
 
 
@@ -124,3 +126,9 @@ STATICFILES_DIRS = (
     
 
 )
+
+
+# Configure Django App for Heroku.
+import django_heroku
+django_heroku.settings(locals())
+
