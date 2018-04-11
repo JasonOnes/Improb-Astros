@@ -79,15 +79,10 @@ WSGI_APPLICATION = 'improbable_astro.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
-    #
-    #
-    # 'default': dj_database_url.config()
+   
     post_user = os.environ.get('USER')
     post_pass = os.environ.get('DB_PASSWORD')
+
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'dltekb77kf62g',
@@ -96,8 +91,7 @@ DATABASES = {
         'HOST': 'ec2-54-83-19-244.compute-1.amazonaws.com',
         'PORT': '5432',
     }
-    #'default': 
-    #{'URI': 'postgres://qsnyaoiaobomlj:cd0fb69617ec03a36f3b4d37f683971cd7ad2d1297e53334e435bff6967cc817@ec2-54-83-19-244.compute-1.amazonaws.com:5432/dltekb77kf62g'}
+
 }
 
 
