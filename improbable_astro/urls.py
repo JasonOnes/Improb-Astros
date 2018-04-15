@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns #won't be needed when deployed via PaaS
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns, static #won't be needed when deployed via PaaS
 from django.urls import include, path, re_path
 # from django.conf.urls import url => url soon to be deprecated
 from . import views 
@@ -24,7 +24,7 @@ import movies
 
 urlpatterns = [
     #TODO look up namespaces in Django v2
-    path('movies/', include('movies.urls')),# namespace='movies')),# in treehous not working in v2?
+    path('movies/', include('movies.urls', namespace='movies')),# in treehous not working in v2?
     path('admin/', admin.site.urls),
     path('home/', views.hello_world, name='home'),
     #path('all_movies/', movies.views.all_movies, name='all_movies'),
@@ -42,5 +42,5 @@ urlpatterns = [
     #url(r'^$', views.hello_world),
 
 urlpatterns += staticfiles_urlpatterns() # only used for local development to locate static
-
+#urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

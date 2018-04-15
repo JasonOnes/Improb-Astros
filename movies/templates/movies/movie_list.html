@@ -1,8 +1,17 @@
 {% extends "base.html" %}
 
+{% load static staticfiles %}
+
+{% block static %}
+<link rel="stylesheet" href="{% static 'movies/css/movies.css' %}">
+{% endblock %}
+
+
+
 {% block title %}
 Movies reviewed
 {% endblock %}
+
 
 
 {% block content %}

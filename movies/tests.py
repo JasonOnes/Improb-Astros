@@ -10,37 +10,34 @@ from .models import Movie, User
 
 class UserModelTests(TestCase):
 
-    user_1 = User.objects.create(name='Timmy', email='lkasjdflkasjdfljaslkdj')
-    user_2 = User.objects.create(name='Tracey', email='tracey@flowers.com')
+    def setUp(self):
+
+        User.objects.create(name='Timmy', email='lkasjdflkasjdfljaslkdj')
+        User.objects.create(name='Tracey', email='tracey@flowers.com')
 
     def test_email_not_valid_form(self):
-        user_1 = User.objects.create(name='Timmy', email='lkasjdflkasjdfljaslkdj')
-        #user_2 = User.objects.create(name='Tracey', email='tracey@flowers.com')
+        ''' checks to see if the match between email and a valid email form is None, ie no match'''
+        user_1 = User.objects.get(name='Timmy')
         match=re.match(r'(\w+[.|\w])*@(\w+[.])*\w+', user_1.email)
         self.assertEqual(match, None, msg="Email not valid")
     
     def test_email_valid(self):
-        #user_1 = User.objects.create(name='Timmy', email='lkasjdflkasjdfljaslkdj')
-        user_2 = User.objects.create(name='Tracey', email='tracey@flowers.com')
+        ''' checks to see if there is a match between a valid email regex, ie match != None '''
+        user_2 = User.objects.get(name='Tracey')
         match=re.match(r'(\w+[.|\w])*@(\w+[.])*\w+', user_2.email)
         #self.assertEqual(match, user_2.email, msg="Email
         self.assertNotEqual(match, None, 'there\'s and email match "somewhere" in the string')
-        self.assertIn
+        
 
 class MovieModelTests(TestCase):
-    pass
 
-
-
-class MovieViewsTests(TestCase):
-    pass
-    '''
     def setUp(self):
 
-        self.user_X = User.objects.create(name='Steve', email='gg@allen.edu')
-        self.user_Y = User.objects.create(name='Jill', email='humble@pie.com')
-        self.user_Y_Not = User.objects.create(name='Jack', email='stupid@does.org')
-
+        user = User.objects.create(
+        name='Timmy',
+        email='alskdjfalskdfjlaskdjf'
+    )
+    
 
         self.movie_X = Movie.objects.create(
             title="Police Academy IX",
@@ -48,24 +45,67 @@ class MovieViewsTests(TestCase):
             rating=4,
             category='C',
             comments='I laughed, I cried',
-            reviewer=user_X
+            reviewer=user
         )
+
         self.movie_Y = Movie.objects.create(
-            title="Something Wicked This Way Comes",
+            title="Dumb",
+            seen_on="2014-06-16",
+            rating=16,
+            category='D',
+            reviewer=user
+        )
+
+    def test_moive_seen_on_date(self):
+        ''' tests to see if movie isn't listed as being seen today'''
+        movie = Movie.objects.get(title="Police Academy IX")
+        today = date.today
+        self.assertNotEqual(movie.seen_on, today)
+
+    def test_movie_rating_between_1and10(self):
+        ''' tests whether the rating is between 1 and 10, no need to check if int '''
+        movie_with_good = Movie.objects.get(title="Police Academy IX")
+        movie_with_bad = Movie.objects.get(title="Dumb")
+        self.assertLessEqual(movie_with_good.rating, 10) and self.assertGreaterEqual(movie_with_good, 1)
+        self.assertGreater(movie_with_bad.rating, 10, msg="Not a valid rating, too high")
+
+
+
+class MovieViewsTests(TestCase):
+    
+    
+    
+    def setUp(self):
+
+        user = User.objects.create(name="Hula", email="hoop@hop.edu")
+        self.movie = Movie.objects.create(
+            title="Something Wicked",
             rating=7,
             category='H',
-            reviewer='user_Y'
+            reviewer=user,
+        )
+        self.movie = Movie.objects.create(
+            title="It",
+            rating=4,
+            category='H',
+            reviewer=user,
         )
 
     def test_movie_list_view(self):
-        response = self.client.get(reverse('movies:movie_list'))
+        ''' checks various aspects of the movie_list view '''
+        
+        movie_X = Movie.objects.get(title="Something Wicked")
+        movie_Y = Movie.objects.get(title="It")
+        
+        response = self.client.get(reverse('movies:all_movies'))
+
         self.assertEqual(response.status_code, 200)
-        self.assertIn(self.movie_X, response.context['movies'])
-        self.assertIn(self.movie_Y, response.context['moives'])
+        self.assertIn(movie_X, response.context['movies'])
+        self.assertIn(movie_Y, response.context['movies'])
         self.assertTemplateUsed(response, 'movies/movie_list.html')
         self.assertContains(response, self.movie.title)#test that the title is somewhere on page
 
-
+'''
     def test_movie_details_view(self):
         response = self.client.get(reverse('movies:movie_detail', kwargs={'pk':self.movie.pk}))
         self.assertEqual(response.status_code, 200)
@@ -76,40 +116,10 @@ class MovieViewsTests(TestCase):
         response = self.client.get(reverse('movies:movie_detail', kwargs={'user_pk':self.movie.pk}))
         self.assertEqual(response.status_code, 200)
         pass
+
 '''
 class UserViewTests(TestCase):
     pass
 
 
 
-
-    '''
-    def test_email_not_valid_style(self):
-        user = User.objects.create(
-            name='Timmy',
-            email='alskdjfalskdfjlaskdjf'
-        )
-
-        match=re.match(r'(\w+[.|\w])*@(\w+[.])*\w+', str(user.email))
-        #self.assertNotEqual(user.email, 'jasonr.jones14@gmail.com')
-        #self.assertEqual(user.email, 'alskdjfalskdfjlaskdjf')
-        #self.assertTrue(match(self.email))
-        self.assertNotEqual(match, None, msg='Email doesn\'t match pattern')
-        self.assertEqual(match, self.email, msg='Email does match')
-        #self.assertFormError(user.email, EmailField)
-    '''    
-
-# class MovieModelTests(TestCase):
-
-#     def test_moive_seen_on_date(self):
-#         movie = Movie.objects.create(
-#             title="Some Piece of Crap", 
-#             rating=2,
-#             category='Cl',
-#             reviewer= 'Timmy'
-#         )
-
-#         today = date.today
-#         self.assertEqual(movie.seen_on, today)
-
-    

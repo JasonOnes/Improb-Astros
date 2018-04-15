@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-import dj_database_url
+# import dj_database_url
 
 
 
@@ -125,9 +125,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'assets'),
-    
 
 )
+#STATICFILES_DIRS = ["/assets/",]
+
+#STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
 
 

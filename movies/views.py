@@ -1,8 +1,9 @@
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from datetime import date
 
 from .models import Movie, User
-
+from .forms import MovieForm
 # Create your views here.
 
 #below placed in improbable views
@@ -46,3 +47,16 @@ def movie_detail(request, pk):
     return render(request, 'movies/movie_detail.html', {'movie':movie, 'user':user})
     
    
+def movie_review(request):#, pk):
+    ''' form to submit a movie review, pk should be User.pk '''
+    if request.method == "POST":
+        form = MovieForm(request.POST)
+        if form.is_valid():
+            movie = form.save(commit=False)
+            movie.reviewer = request.user
+            movie.added = date.today()
+            movie.save()
+            return redirect('movie_detail', pk=movie.pk)
+    else:
+        form = MovieForm()
+    return render(request, 'movies/movie_review.html', {'form':  form})
