@@ -55,21 +55,27 @@ class Movie(models.Model):
 
     # movie_id
     # title - CharField
-    # release_year - Int
     # rated - ENUM? (G, PG, PG-13, R, NC-17, NR)
     # release_date - datetime
-    # runtime - Int
-    # production_co - CharField
     # plot_summary - TextField
     # poster_url - TextField
+
+    # probably don't need
+    # production_co - CharField
     # imdb_id - Int - can create a link to IMDB for each movie with this
+    # runtime - Int
+
+    # think about how to keep these numbers up to date
     # imdb_rating - Float
     # rotten_tomatoes_rating - Int
     # metacritic_rating - Int
+    # release_year - Int - can get from release_date
 
     def __str__(self):
         return (self.title, self.release_year)
 
+
+# compare performance - genre from association table, or as an arrayField on each movie?
 
 class Genre(models.Model):
     """ Defines a class for Genre objects. """
@@ -91,6 +97,7 @@ class MovieGenre(models.Model):
     def __str__(self):
         return (self.movie.title, self.genre.genre_name)
 
+# probably not needed for MVP
 
 class CastCrewMember(models.Model):
     """ Defines a class of objects to represent a movie's cast/crew. """
@@ -101,6 +108,7 @@ class CastCrewMember(models.Model):
     def __str__(self):
         return self.name
 
+# probably not needed for MVP
 
 class MovieCast(models.Model):
     """ Defines an association table of cast and crew members on a particular movie. """
@@ -117,7 +125,7 @@ class MovieCast(models.Model):
 # Movie Lists - save for V2?
 # ----------------------------
 
-
+# Talk about for next time - to create wishlist - or save wishlist on user/movie?
 class UserList(models.Model):
     """ Defines a class for a UserList object. """
 
