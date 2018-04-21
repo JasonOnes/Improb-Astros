@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}
+{{ movie.title }}
+{% endblock %}
+
+{% block content %}
+    {%  if details %}
+<h1>{{  details.title }}</h1>
+<p>Year: {{  details.year }}</p>
+    <p>Rating: {{ details.rated }}</p>
+    <p>imdb rating: {{ details.imdb_rating }}</p>
+    <p>Length: {{ details.runtime }}</p>
+
+
+    <h4 style="color: red;">{{  details }}</h4>
+{#        TODO add review button here?#}
+    {%  else %}
+    <h1>Movie not found, perhaps you misspelled it.</h1>
+    {%  endif %}
+{% endblock %}

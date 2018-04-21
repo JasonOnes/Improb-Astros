@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% load static staticfiles %}
+
+{% block static %}
+<link rel="stylesheet" href="{% static 'movies/css/movies.css' %}">
+{% endblock %}
+
+
+
+{% block title %}
+Movie Search
+{% endblock %}
+
+{%  block content %}
+<form method="POST" class="search-form">{% csrf_token %}
+    {{ form.as_p }}
+    <button type='submit' class="save btn btn-default">Find, please</button>
+</form>
+
+{%  endblock %}

@@ -2,8 +2,10 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from datetime import date
 
-from .models import Movie, User
-from .forms import ReviewForm
+import omdb
+
+from .models import Movie, User, Review
+from .forms import ReviewForm, SearchForm
 # Create your views here.
 
 #below placed in improbable views
@@ -60,3 +62,22 @@ def movie_review(request):#, movie_pk, user_pk):
     else:
         form = ReviewForm()
     return render(request, 'movies/movie_review.html', {'form':  form})
+
+def movie_search(request):
+    '''form for looking up movie and hit omdb api'''
+    if request.method == "POST":
+        form = SearchForm(request.POST)
+
+        if form.is_valid():
+            movie = form.save(commit=False)
+            #movie.title = request.title
+            print("##")
+            print(movie.title)
+            #title = request.title
+            #movie = form.save(commit=False)
+            #returned_values = omdb.request(t=form)# json should be default, r='json')
+            returned_values = omdb.get(title=movie.title)
+            return render(request, 'movies/omdb_movie_data.html', {'details': returned_values})
+    else:
+        form = SearchForm()
+    return render(request, 'movies/movie_search.html', {'form': form})

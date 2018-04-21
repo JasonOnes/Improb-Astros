@@ -19,11 +19,12 @@
             <nav>
                     <!-- using name of path                -->
                     <a href="{% url 'home' %}">Home</a>
-
+                    <a href="{% url 'movies:movie_search' %}">Movie Search</a>
                     <a href="{% url 'movies:all_movies' %}">All Movies Reviewed</a>
                     {% if user.is_authenticated %}
                     <a href="{% url 'movies:movie_review' %}">Review a Movie</a>
                     {% endif %}
+
                     <!-- below causes pile ups at url name
                     <a href="all_movies">All Movies Reviewed</a> -->
                 </nav>

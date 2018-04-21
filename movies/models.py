@@ -35,6 +35,7 @@ class Movie(models.Model):
 
     added = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=200)
+    #year = models.DateTimeField(default=date.year)
     genre = models.CharField(choices=MOVIE_CATEGORIES, max_length=2, default='D')
 
     rotten_tomatoes_score = models.PositiveSmallIntegerField(null=True)  # TODO max=100)
