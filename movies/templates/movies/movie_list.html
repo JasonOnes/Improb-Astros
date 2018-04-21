@@ -28,7 +28,7 @@ Movies reviewed
  </ul>
  {% endfor %}
   -->
-
+{% if movies %}
 {% for movie in movies %}
 <div class="card">
     
@@ -38,4 +38,7 @@ Movies reviewed
     </div>
 </div>
 {% endfor %}
+    {% else %}
+    <h1>No movies reviewed yet, get to work you!</h1>
+    {%  endif %}
  {% endblock %}

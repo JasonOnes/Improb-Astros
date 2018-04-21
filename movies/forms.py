@@ -1,9 +1,11 @@
 from django import forms
 
-from .models import Movie, User
+from .models import Movie, User, Review
 
-class MovieForm(forms.ModelForm):
+class ReviewForm(forms.ModelForm):
 
     class Meta:
-        model = Movie
-        fields = ('title', 'seen_on', 'rating', 'category', 'comments')
+        model = Review
+        fields = ('movie', 'rating', 'comment')
+
+
