@@ -10,9 +10,9 @@ class User(models.Model):
     name = models.CharField(max_length=200)
     email = models.EmailField()
     # TODO look inManyToManyField
-    followed_users = ArrayField(models.IntegerField(), null=True)
-    friends_list = ArrayField(models.IntegerField(), null=True)
-    movies_wanting_to_see = ArrayField(models.IntegerField(), null=True)
+    followed_users = ArrayField(models.IntegerField(), blank=True, null=True)#blank allows form fields to be left empty
+    friends_list = ArrayField(models.IntegerField(), blank=True, null=True)
+    movies_wanting_to_see = ArrayField(models.IntegerField(), blank=True,  null=True)
 
     def __str__(self):
         return self.name
@@ -22,6 +22,7 @@ class User(models.Model):
 
 
 class Movie(models.Model):
+    #all movies (?) will be populated through api, not manually entered with form
     MOVIE_CATEGORIES = (
         ('C', 'Comedy'),
         ('D', 'Documentary'),
@@ -35,9 +36,10 @@ class Movie(models.Model):
 
     added = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=200)
-    #year = models.DateTimeField(default=date.year)
-    genre = models.CharField(choices=MOVIE_CATEGORIES, max_length=2, default='D')
-
+    year = models.PositiveSmallIntegerField(null=True)
+    length = models.CharField(max_length=20, default="90 min")
+    #genre = models.CharField(choices=MOVIE_CATEGORIES, max_length=2, default='D')
+    rating = models.CharField(max_length=10, null=True)
     rotten_tomatoes_score = models.PositiveSmallIntegerField(null=True)  # TODO max=100)
     imdb_score = models.PositiveSmallIntegerField(default=0, null=True)
     imdb_url = models.URLField(null=True)

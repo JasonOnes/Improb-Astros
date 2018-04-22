@@ -6,8 +6,10 @@
 {% block content %}
 
 <h1>{{ movie.title }}</h1>
-<p></p>
-<p>Here is what {{ user.name }} had to say about it: </p>
-<p>{{ review.comments|linebreaks }}</p>
-
+<p>If this were a properly found movie . . .</p>
+<p>There will be details here: for properly searched movies </p>
+{#    TODO add if filters ?#}
+<p>Year: {{ movie.year }}</p>
+<p>Genre: {{  movie.genre }}</p>
+    <p>Added to db: {{  moive.added }}</p>
 {% endblock %}

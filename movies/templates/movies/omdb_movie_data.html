@@ -14,6 +14,7 @@
 
     <h4 style="color: red;">{{  details }}</h4>
 {#        TODO add review button here?#}
+        <a href="{%  url 'movies:movie_review' %}">Review it?</a>
     {%  else %}
     <h1>Movie not found, perhaps you misspelled it.</h1>
     {%  endif %}
