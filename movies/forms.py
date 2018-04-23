@@ -15,4 +15,7 @@ class SearchForm(forms.ModelForm):
         model = Movie
         fields = ('title',)
 
-
+#
+# class ReviewForm(forms.Form):
+#     #rating = forms.IntegerField(choices=list(range(10)), widget=forms.ChoiceField)
+#     comment = forms.CharField(widget=forms.Textarea)

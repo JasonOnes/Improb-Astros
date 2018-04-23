@@ -3,7 +3,7 @@ from datetime import date
 
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import UserManager  # django default manager, since no custom user fields
-
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class User(models.Model):
     # id
@@ -39,7 +39,7 @@ class Movie(models.Model):
     year = models.PositiveSmallIntegerField(null=True)
     length = models.CharField(max_length=20, default="90 min")
     #genre = models.CharField(choices=MOVIE_CATEGORIES, max_length=2, default='D')
-    rating = models.CharField(max_length=10, null=True)
+    rated = models.CharField(max_length=10, null=True)
     rotten_tomatoes_score = models.PositiveSmallIntegerField(null=True)  # TODO max=100)
     imdb_score = models.PositiveSmallIntegerField(default=0, null=True)
     imdb_url = models.URLField(null=True)
@@ -54,7 +54,7 @@ class Movie(models.Model):
 class Review(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     reviewer = models.ForeignKey(User, on_delete=models.CASCADE)
-    rating = models.SmallIntegerField()
+    rating = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
     # different default methods have different meanings for textFields
     # Nullable if no value db stored as Null, blank=True allows form fields to be blank, and default=""
     comment = models.TextField(blank=True, default='', max_length=1000)
