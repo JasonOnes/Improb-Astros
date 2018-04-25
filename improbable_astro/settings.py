@@ -29,8 +29,8 @@ SECRET_KEY = something_secret
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0']
-#ALLOWED_HOSTS = ['improb-astro.herokuapp.com']
+#ALLOWED_HOSTS = ['0.0.0.0']
+ALLOWED_HOSTS = ['improb-astro.herokuapp.com']
 
 # Application definition
 
@@ -78,29 +78,19 @@ WSGI_APPLICATION = 'improbable_astro.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-post_user = os.environ.get('USER')
-post_pass = os.environ.get('DB_PASSWORD')
-
 DATABASES = {
    
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#        'NAME': 'dltekb77kf62g',
-#        'USER': post_user,
-#        'PASSWORD': post_pass,
-#        'HOST': 'ec2-54-83-19-244.compute-1.amazonaws.com',
-#        'PORT': '5432',
-#    }
+    post_user = os.environ.get('USER')
+    post_pass = os.environ.get('DB_PASSWORD')
 
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'improb-astros',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dltekb77kf62g',
         'USER': post_user,
         'PASSWORD': post_pass,
-        'HOST': '127.0.0.1',
+        'HOST': 'ec2-54-83-19-244.compute-1.amazonaws.com',
         'PORT': '5432',
     }
-
 
 }
 
