@@ -37,7 +37,7 @@ def movie_review(request):#, movie_pk, user_pk):
     ''' form to submit a movie review, pk should be User.pk '''
     if request.method == "POST":
         form = ReviewForm(request.POST)
-        T#TODO get User instance (ie logged in session user, not superuser admin
+        #TODO get User instance (ie logged in session user, not superuser admin
         if form.is_valid():
             review = form.save(commit=False)
             review.reviewer = request.user
@@ -72,7 +72,7 @@ def movie_search(request):
             movie = form.save(commit=False)
             #returned_values = omdb.request(t=form)# json should be default, r='json')
             returned_values = omdb.get(title=movie.title)
-
+            #returned_values = omdb.search(movie.title)
             #movie.rotten_tomatoes_score = returned_values.ratings[]
             # TODO add movie attributes from omdb to model
             # movie.imdb_score = returned_values.imdb_rating
