@@ -1,21 +1,29 @@
 from django.db import models
 from datetime import date
 
-from django.contrib.auth.models import User # django default, since no custom user fields
+from django.contrib.auth.models import AbstractBaseUser# django default, since no custom user fields
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 
  # may notice no id key, not necessary with django auto pk set 
 
-class CustomUser(User):
+class User(AbstractBaseUser): # just named CustomUser for now
     # Let's see how the default behaves for now, based on our schema I don't see any custom fields
     first_name = None # for some anonymity, is_anonymous or AnonymousUser doesn't set id
     last_name = None # can change these later if desired (obvs)
+    username = models.CharField(max_length=25)
+    following = models.ManyToManyField("self", symmetrical=False) # self allows reference to same model 
+    '''symmetrical keeps the relationship unilateral, we don't want that, Jane following Sue doesn't 
+    automatically mean Sue is following Jane'''
+
 
     def __str__(self):
         return self.username
 
 # TODO look into User Groups (models.Group) where we can set permissions
+# Below doesn't work well https://stackoverflow.com/questions/41595364/fields-e304-reverse-accessor-clashes-in-django
+# restructuring with Many-toMany
+'''
 class FollowPairs(models.Model):
     follower = models.ForeignKey('User', on_delete=models.CASCADE) 
     followed_reviewer = models.ForeignKey('User', on_delete=models.CASCADE)
@@ -23,13 +31,13 @@ class FollowPairs(models.Model):
     def __str__(self):
         return "{} is following {}".format(self.follower, self.followed_reviewer)
 
-
+'''
 
 class Movie(models.Model):
     title = models.CharField(max_length=500)
     length = models.PositiveSmallIntegerField(default=0)
-    genre = models.ForeignKey('MovieGenre', on_delete=models.SET_NULL) # not sure why a genre would be deleted but . . .
-    rated = models.CharField(max_length=10)
+    genre = models.ForeignKey('MovieGenre',null=True, on_delete=models.SET_NULL) # not sure why a genre would be deleted but . . .
+    rated = models.CharField(null=True, max_length=10)
     rot_toms_score = models.PositiveSmallIntegerField(null=True, validators=[MaxValueValidator(100)])
     imdb_score = models.PositiveSmallIntegerField(default=0, null=True)
     imdb_url = models.URLField(null=True)
@@ -73,7 +81,7 @@ class Movie(models.Model):
 class Review(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     comments = models.TextField(blank=True, default='')
-    reviewer = models.ForeignKey(User, on_delete=models.SET_NULL) # Keeps the reviews of people who are no longer users sets user to null
+    reviewer = models.ForeignKey(User,null=True, on_delete=models.SET_NULL) # Keeps the reviews of people who are no longer users sets user to null
     # Is this what we want or do we want to delete the Review
     rating = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
     last_reviewed = models.DateTimeField(auto_now_add=True)
@@ -84,8 +92,8 @@ class Review(models.Model):
 class MovieGenre(models.Model):
     # TODO look into Enum classing/choices, match to omdb genres, but can't find complete list 
    
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    movie_with_genre = models.ForeignKey(Movie, on_delete=models.CASCADE) # wonky column name but can't have it clash with movie
     genre = models.CharField(max_length=50)
 
     def __str__(self):
-        return "{} is a(n) {} movie.".format(self.movie, self.genre)
+        return "{} is a(n) {} movie.".format(self.movie_with_genre, self.genre)

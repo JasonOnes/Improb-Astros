@@ -14,6 +14,8 @@ import os
 import dj_database_url
 import django_heroku
 
+from hidden import SECRET_KEY, DB_PASS, DB_USER, DATABASE_URL
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,8 +26,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = 'qq-h9!h3a4%2y3ny$bs)^39eg$@lyu%$3jh!r3ie-yl8c8blzh'
-something_secret = os.environ.get('SECRET_KEY')
-SECRET_KEY = something_secret
+
+#imported directly now but save for later use
+#SECRET_KEY = os.environ.get('SECRET_KEY')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -78,16 +82,18 @@ WSGI_APPLICATION = 'improbable_astro.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-   
-    post_user = os.environ.get('USER')
-    post_pass = os.environ.get('DB_PASSWORD')
 
+
+
+DATABASES = {
+    
+    # 'default' : dj_database_url.congig(DATABASE_URL)
+   
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'dltekb77kf62g',
-        'USER': post_user,
-        'PASSWORD': post_pass,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASS,
         'HOST': 'ec2-54-83-19-244.compute-1.amazonaws.com',
         'PORT': '5432',
     }
