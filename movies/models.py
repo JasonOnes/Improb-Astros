@@ -5,6 +5,8 @@ from django.contrib.auth.models import User # django default, since no custom us
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 
+ # may notice no id key, not necessary with django auto pk set 
+
 class CustomUser(User):
     # Let's see how the default behaves for now, based on our schema I don't see any custom fields
     first_name = None # for some anonymity, is_anonymous or AnonymousUser doesn't set id
@@ -15,9 +17,8 @@ class CustomUser(User):
 
 # TODO look into User Groups (models.Group) where we can set permissions
 class FollowPairs(models.Model):
-    follower = models.ForeignKey('User')#, on_delete=models.CASCADE)
-    # I'm not sure we want anything to happen on delete, this table shouldn't affect users
-    followed_reviewer = models.ForeignKey('User')
+    follower = models.ForeignKey('User', on_delete=models.CASCADE) 
+    followed_reviewer = models.ForeignKey('User', on_delete=models.CASCADE)
 
     def __str__(self):
         return "{} is following {}".format(self.follower, self.followed_reviewer)
@@ -25,10 +26,9 @@ class FollowPairs(models.Model):
 
 
 class Movie(models.Model):
-
     title = models.CharField(max_length=500)
     length = models.PositiveSmallIntegerField(default=0)
-    genre = models.ForeignKey('MovieGenre', on_delete=models.CASCADE,)
+    genre = models.ForeignKey('MovieGenre', on_delete=SET_NULL) # not sure why a genre would be deleted but . . .
     rated = models.CharField(max_length=10)
     rot_toms_score = models.PositiveSmallIntegerField(null=True, validators=[MaxValueValidator(100)])
     imdb_score = models.PositiveSmallIntegerField(default=0, null=True)
@@ -73,26 +73,17 @@ class Movie(models.Model):
 class Review(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     comments = models.TextField(blank=True, default='')
-    reviewer = models.ForeignKey(User, on_delete=models.CASCADE) # many to one, if user is deleted all movies attributed will also be removed
+    reviewer = models.ForeignKey(User, on_delete=models.SET_NULL) # Keeps the reviews of people who are no longer users sets user to null
+    # Is this what we want or do we want to delete the Review
     rating = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
     last_reviewed = models.DateTimeField(auto_now_add=True)
 
-
+    def __str__(self):
+        return "{} gives {} a {}.".format(self.reviewer, self.movie, self.rating)
 
 class MovieGenre(models.Model):
-    # TODO look into Enum classing, match to omdb rated values
-    '''
-    MOVIE_CATEGORIES = (
-        ('C', 'Comedy'),
-        ('D', 'Documentary'),
-        ('H', 'Horror'),
-        ('RC', 'Romantic Comedy'),
-        ('SF', 'Sci-Fi'),
-        ('D', 'Drama'),
-        ('Cl', 'Classic'),
-        ('CC', 'Cult Classic'),
-    )
-    '''
+    # TODO look into Enum classing/choices, match to omdb genres, but can't find complete list 
+   
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     genre = models.CharField(max_length=50)
 
