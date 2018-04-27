@@ -28,7 +28,7 @@ class FollowPairs(models.Model):
 class Movie(models.Model):
     title = models.CharField(max_length=500)
     length = models.PositiveSmallIntegerField(default=0)
-    genre = models.ForeignKey('MovieGenre', on_delete=SET_NULL) # not sure why a genre would be deleted but . . .
+    genre = models.ForeignKey('MovieGenre', on_delete=models.SET_NULL) # not sure why a genre would be deleted but . . .
     rated = models.CharField(max_length=10)
     rot_toms_score = models.PositiveSmallIntegerField(null=True, validators=[MaxValueValidator(100)])
     imdb_score = models.PositiveSmallIntegerField(default=0, null=True)
