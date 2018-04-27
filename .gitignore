@@ -102,3 +102,6 @@ ENV/
 
 #dev sqlite
 .sqlite3
+
+# my configs, tokens
+hidden.py
