@@ -102,3 +102,7 @@ ENV/
 
 #dev sqlite
 .sqlite3
+
+# config vars in here for now
+hidden.py
+
