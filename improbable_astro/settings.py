@@ -15,7 +15,8 @@ import sys
 import dj_database_url
 import django_heroku
 
-from hidden import SECRET_KEY, DB_PASS, DB_USER, DATABASE_URL, TEST_USER, TEST_P_WORD
+import omdb
+from hidden import SECRET_KEY, DB_PASS, DB_USER, DATABASE_URL, TEST_USER, TEST_P_WORD, om_key
 
 #from django.core import User
 #from movies.models import User
