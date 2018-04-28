@@ -167,9 +167,6 @@ STATICFILES_DIRS = (
 # import as settings.AUTH_USER_MODEL, why is this better?
 #AUTH_USER_MODEL = 'core.User'
 
-<<<<<<< HEAD
 # Configure Django App for Heroku.
 django_heroku.settings(locals())
-=======
->>>>>>> jason-dev-local
 
