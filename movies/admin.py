@@ -12,4 +12,5 @@ class CourseAdmin(admin.ModelAdmin):
 admin.site.register(Movie)
 admin.site.register(User)
 admin.site.register(Review)
+#admin.site.register(FollowPairs)
 admin.site.register(MovieGenre)

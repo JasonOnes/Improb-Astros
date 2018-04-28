@@ -20,6 +20,12 @@ from hidden import SECRET_KEY, DB_PASS, DB_USER, DATABASE_URL, TEST_USER, TEST_P
 #from django.core import User
 #from movies.models import User
 
+# import dj_database_url
+
+
+# settup as omdb client with key
+API_KEY = om_key
+omdb.set_default('apikey', API_KEY)
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -34,8 +40,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-#ALLOWED_HOSTS = ['0.0.0.0']
-ALLOWED_HOSTS = ['improb-astro.herokuapp.com']
+ALLOWED_HOSTS = ['0.0.0.0']
+#ALLOWED_HOSTS = ['improb-astro.herokuapp.com']
 
 # Application definition
 
@@ -47,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'movies',
+
 ]
 
 MIDDLEWARE = [
@@ -149,14 +156,20 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'assets'),
-    
 
 )
+#STATICFILES_DIRS = ["/assets/",]
+
+#STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+
 
 #TODO look into why this might be necessary
 # import as settings.AUTH_USER_MODEL, why is this better?
 #AUTH_USER_MODEL = 'core.User'
 
+<<<<<<< HEAD
 # Configure Django App for Heroku.
 django_heroku.settings(locals())
+=======
+>>>>>>> jason-dev-local
 
