@@ -2,19 +2,27 @@ from django.db import models
 from datetime import date
 
 from django.contrib.auth.models import AbstractBaseUser# django default, since no custom user fields
+# https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#abstractuser
 from django.core.validators import MinValueValidator, MaxValueValidator
+#from django.conf import settings
+
 
 
  # may notice no id key, not necessary with django auto pk set 
 
 class User(AbstractBaseUser): # just named CustomUser for now
     # Let's see how the default behaves for now, based on our schema I don't see any custom fields
+    # https://docs.djangoproject.com/en/2.0/ref/contrib/auth/ link to User model fields
     first_name = None # for some anonymity, is_anonymous or AnonymousUser doesn't set id
     last_name = None # can change these later if desired (obvs)
     username = models.CharField(max_length=25)
+    email = models.EmailField(null=True)
+    # groups ?
     following = models.ManyToManyField("self", symmetrical=False) # self allows reference to same model 
     '''symmetrical keeps the relationship unilateral, we don't want that, Jane following Sue doesn't 
     automatically mean Sue is following Jane'''
+    # alternatively
+    # following = models.ManyToManyField(settings.AUTH_USER_MODEL, syemmetrical=False)
 
 
     def __str__(self):

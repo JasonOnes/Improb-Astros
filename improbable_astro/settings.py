@@ -11,11 +11,14 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import sys 
 import dj_database_url
 import django_heroku
 
-from hidden import SECRET_KEY, DB_PASS, DB_USER, DATABASE_URL
+from hidden import SECRET_KEY, DB_PASS, DB_USER, DATABASE_URL, TEST_USER, TEST_P_WORD
 
+#from django.core import User
+#from movies.models import User
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -82,21 +85,29 @@ WSGI_APPLICATION = 'improbable_astro.wsgi.application'
 
 
 
-
-DATABASES = {
-    
-    # 'default' : dj_database_url.congig(DATABASE_URL)
-   
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dltekb77kf62g',
-        'USER': DB_USER,
-        'PASSWORD': DB_PASS,
-        'HOST': 'ec2-54-83-19-244.compute-1.amazonaws.com',
-        'PORT': '5432',
+# Below necessary to override local test using sqllite, also necessary since Heroku 
+# doesn't grant Django permissions
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        }
     }
 
-}
+else:
+    DATABASES = {
+        'default': {
+        
+
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'dltekb77kf62g',
+            'USER': DB_USER,
+            'PASSWORD': DB_PASS,
+            'HOST': 'ec2-54-83-19-244.compute-1.amazonaws.com',
+            'PORT': '5432',
+        }
+
+    }
 
 
 # Password validation
@@ -142,8 +153,10 @@ STATICFILES_DIRS = (
 
 )
 
+#TODO look into why this might be necessary
+# import as settings.AUTH_USER_MODEL, why is this better?
+#AUTH_USER_MODEL = 'core.User'
 
 # Configure Django App for Heroku.
-#
 django_heroku.settings(locals())
 

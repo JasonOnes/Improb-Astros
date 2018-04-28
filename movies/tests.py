@@ -5,31 +5,41 @@ from datetime import date
 import re 
 
 #from django.contrib.auth.models import EmailField
-from .models import Movie, User
+from .models import Movie, User, Review, MovieGenre
 
 
 class UserModelTests(TestCase):
-
-    user_1 = User.objects.create(name='Timmy', email='lkasjdflkasjdfljaslkdj')
-    user_2 = User.objects.create(name='Tracey', email='tracey@flowers.com')
+   
+    def setup(self):
+        self.user_1 = User.objects.create(username='Timmy', email='lkasjdflkasjdfljaslkdj')
+        self.user_2 = User.objects.create(username='Tracey', email='tracey@flowers.com')
 
     def test_email_not_valid_form(self):
-        user_1 = User.objects.create(name='Timmy', email='lkasjdflkasjdfljaslkdj')
+        user_1 = User.objects.create(username='Timmy', email='lkasjdflkasjdfljaslkdj')
         #user_2 = User.objects.create(name='Tracey', email='tracey@flowers.com')
         match=re.match(r'(\w+[.|\w])*@(\w+[.])*\w+', user_1.email)
         self.assertEqual(match, None, msg="Email not valid")
     
     def test_email_valid(self):
         #user_1 = User.objects.create(name='Timmy', email='lkasjdflkasjdfljaslkdj')
-        user_2 = User.objects.create(name='Tracey', email='tracey@flowers.com')
+        user_2 = User.objects.create(username='Tracey', email='tracey@flowers.com')
         match=re.match(r'(\w+[.|\w])*@(\w+[.])*\w+', user_2.email)
         #self.assertEqual(match, user_2.email, msg="Email
         self.assertNotEqual(match, None, 'there\'s and email match "somewhere" in the string')
-        self.assertIn
+        
+   
+    
 
 class MovieModelTests(TestCase):
+
+    #movie_1 = Movie.objects.create("Princess Bride", 120, 'Dramedy', 'PG')
     pass
 
+class ReviewModelTest(TestCase):
+    pass
+
+class MovieGenreModelTest(TestCase):
+    pass
 
 
 class MovieViewsTests(TestCase):
@@ -83,33 +93,5 @@ class UserViewTests(TestCase):
 
 
 
-    '''
-    def test_email_not_valid_style(self):
-        user = User.objects.create(
-            name='Timmy',
-            email='alskdjfalskdfjlaskdjf'
-        )
-
-        match=re.match(r'(\w+[.|\w])*@(\w+[.])*\w+', str(user.email))
-        #self.assertNotEqual(user.email, 'jasonr.jones14@gmail.com')
-        #self.assertEqual(user.email, 'alskdjfalskdfjlaskdjf')
-        #self.assertTrue(match(self.email))
-        self.assertNotEqual(match, None, msg='Email doesn\'t match pattern')
-        self.assertEqual(match, self.email, msg='Email does match')
-        #self.assertFormError(user.email, EmailField)
-    '''    
-
-# class MovieModelTests(TestCase):
-
-#     def test_moive_seen_on_date(self):
-#         movie = Movie.objects.create(
-#             title="Some Piece of Crap", 
-#             rating=2,
-#             category='Cl',
-#             reviewer= 'Timmy'
-#         )
-
-#         today = date.today
-#         self.assertEqual(movie.seen_on, today)
-
     
+
