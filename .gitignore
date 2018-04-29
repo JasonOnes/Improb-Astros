@@ -108,3 +108,6 @@ hidden.py
 
 # not caught up top
 movies/__pycache__
+
+# migrations
+movies/migrations/

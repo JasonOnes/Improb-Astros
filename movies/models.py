@@ -94,13 +94,13 @@ class Movie(models.Model):
 class Review(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     comments = models.TextField(blank=True, default='')
-    reviewer = models.ForeignKey(Reviewer,null=True, on_delete=models.SET_NULL) # Keeps the reviews of people who are no longer users sets user to null
+    reviewed_by = models.ForeignKey(Reviewer,null=True, on_delete=models.SET_NULL) # Keeps the reviews of people who are no longer users sets user to null
     # Is this what we want or do we want to delete the Review
     rating = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
     last_reviewed = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return "{} gives {} a {}.".format(self.reviewer, self.movie, self.rating)
+        return "{} gives {} a {}.".format(self.reviewed_by, self.movie, self.rating)
 
 class MovieGenre(models.Model):
     # TODO look into Enum classing/choices, match to omdb genres, but can't find complete list 
