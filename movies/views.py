@@ -1,12 +1,23 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
+from django.core.mail import send_mail
+from django.contrib import messages
+from django.urls import reverse
 from datetime import date
 
 import omdb
 
 from .models import Movie, User, Review
-from .forms import ReviewForm, SearchForm
+from .forms import ReviewForm, SearchForm#, ContactForm
 
+
+def login(request):
+    ''' renders login form '''
+    return render(request, 'movies/login.html')
+
+def sign_up(request):
+    ''' renders sign up form '''
+    return render(request, 'movies/sign_up.html')
 
 
 def all_movies(request):
@@ -89,4 +100,24 @@ def movie_search(request):
     else:
         form = SearchForm()
     return render(request, 'movies/movie_search.html', {'form': form})
+
+
+# Below just for my own practice of how Django built in for email works
+
+# def contact_view(request):
+#     ''' gives users a way to contact us with a quick question or comment, if they have entered an email '''
+#     form = ContactForm()
+#     if request.method == 'POST':
+#         form = ContactForm(request.POST)
+#         if form.is_valid():
+#             send_mail(
+#                 'Comment from {}'.format(form.cleaned_data['username']),
+#                 form.cleaned_data['questions_comments'],
+#                 '{username} <{email}>'.format(**form.cleaned_data),
+#                 ['whomever_on_team@somewhere.com']
+#             )
+#             # messages like flash in flask
+#             messages.add_message(request, messages.suggest, 'You\'re message has been sent')
+#             return HttpResponseRedirect(reverse('contact'))
+#     return render(request, 'contact.html', {'form':form})
 

@@ -7,6 +7,8 @@ app_name = 'movies'
 
 urlpatterns = [
     #path('all_movies/', views.all_movies, name='all_movies'),
+    path('login/', views.login, name='login'),
+    path('sign_up', views.sign_up, name='sign_up'),
     path('movie_search/', views.movie_search, name='movie_search'),
     path('omdb_movie_data/', views.movie_search, name='omdb_data'),
 

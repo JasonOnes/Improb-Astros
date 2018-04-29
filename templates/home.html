@@ -2,4 +2,11 @@
 
 {% block content %}
 <h1>Hi, this home, you live here now!</h1>
+
+
+<a href="{% url 'movies:login' %}">Login</a>
+</br>
+</br>
+<a href="{% url 'movies:sign_up' %}">Sign Me UP!</a>
+
 {% endblock %}

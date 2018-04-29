@@ -163,6 +163,9 @@ STATICFILES_DIRS = (
 
 #STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
+#for future email functionality to contact us with feedback
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'contact')
 
 #TODO look into why this might be necessary
 # import as settings.AUTH_USER_MODEL, why is this better?
