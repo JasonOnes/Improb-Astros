@@ -106,3 +106,5 @@ ENV/
 # config vars in here for now
 hidden.py
 
+# not caught up top
+movies/__pycache__
