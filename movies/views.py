@@ -94,8 +94,12 @@ def movie_search(request):
                 print(type(movie.length))
                 #movie.genre
                 movie.rated = returned_values['rated']
-                movie.rot_tom_score = returned_values['ratings'][1]['value']
-                print(movie.rot_tom_score)
+                try:
+                    movie.rot_tom_score = returned_values['ratings'][1]['value']
+                    print(movie.rot_tom_score)
+                except IndexError:
+                    print("not standardized json")
+                    pass
                 movie.imdb_score = returned_values['imdb_rating']
                 #movie.imdb_url = 
                 
