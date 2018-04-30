@@ -83,19 +83,31 @@ def movie_search(request):
             movie = form.save(commit=False)
             #returned_values = omdb.request(t=form)# json should be default, r='json')
             returned_values = omdb.get(title=movie.title)
-            #returned_values = omdb.search(movie.title)
-            #movie.rotten_tomatoes_score = returned_values.ratings[]
-            # TODO add movie attributes from omdb to model
-            # movie.imdb_score = returned_values.imdb_rating
-            # movie.rating = returned_values.rated
-            # movie.length = returned_values.runtime
-            try:
-
+            #returned_values = omdb.search_movie(movie.title)
+            if returned_values:
+                movie.year = returned_values['year']
+                print(type(movie.year))
+                movie.length = returned_values['runtime']
+                print(returned_values['runtime'])
+                print(type(returned_values['runtime']))
+                print(movie.length)
+                print(type(movie.length))
+                #movie.genre
+                movie.rated = returned_values['rated']
+                movie.rot_tom_score = returned_values['ratings'][1]['value']
+                print(movie.rot_tom_score)
+                movie.imdb_score = returned_values['imdb_rating']
+                #movie.imdb_url = 
+                
                 movie.save()
                 print("Movie saved")
-            except:
-                print("Unable to Save")
-
+                
+                # try:
+                #     movie.save()
+                #     print("Movie saved")
+                # except:  
+                #     print("Unable to Save")
+                
             return render(request, 'movies/omdb_movie_data.html', {'details': returned_values})
     else:
         form = SearchForm()

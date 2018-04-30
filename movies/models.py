@@ -47,17 +47,22 @@ class Movie(models.Model):
     # It looks like omdb is returning all values as strings so we'll need to convert all values accordingly
     title = models.CharField(max_length=500)
     year = models.CharField(max_length=4) # omdb returns strings not date objects or ints
-    #length = models.PositiveSmallIntegerField(default=0)
+   
     length = models.CharField(max_length=20)
+    '''
     genre = models.ForeignKey('MovieGenre',null=True, on_delete=models.SET_NULL) # not sure why a genre would be deleted but . . .
     rated = models.CharField(null=True, max_length=10)
-    rot_toms_score = models.PositiveSmallIntegerField(null=True, validators=[MaxValueValidator(100)])
-    imdb_score = models.PositiveSmallIntegerField(default=0, null=True)
-    imdb_url = models.URLField(null=True)
+    rot_toms_score = models.CharField(max_length=4, null=True)
+    #rot_toms_score = models.PositiveSmallIntegerField(null=True, validators=[MaxValueValidator(100)])
+    imdb_score = models.CharField(max_length=4, null=True)
+    #imdb_score = models.PositiveSmallIntegerField(default=0, null=True)
+    #imdb_url = models.URLField(null=True)
     # null must be true for initial movie details, not in db no reviewers yet
+
+
     num_of_reviewers = models.PositiveIntegerField(null=True)
     user_ratings_average = models.PositiveSmallIntegerField(null=True)
-
+    '''
     def __str__(self):
         return self.title
 
@@ -89,7 +94,7 @@ class Movie(models.Model):
         new_rating = self.get_average_user_rating
         self.user_ratings_average = new_rating
         pass
-
+    
 
 class Review(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
